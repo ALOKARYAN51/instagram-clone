@@ -1,13 +1,19 @@
 import { useState } from 'react'
-import { BsThreeDots } from 'react-icons/bs'
+import { BsEmojiSmile, BsThreeDots } from 'react-icons/bs'
 import "./PostCard.css";
-import { AiFillAlert, AiOutlineHeart } from 'react-icons/ai';
+import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import { FaRegComment } from 'react-icons/fa';
 import { RiSendPlane2Line } from 'react-icons/ri';
+import { BsBookmark, BsBookmarkFill} from "react-icons/bs";
 const PostCard = () => {
   const [showDropDown, setShowDropDown] = useState(false);
   const [isPostLiked, setIsPostLiked] = useState(false);
+  const[isSaved, setIsSaved]=useState(false);
 
+
+  const handleSavePost=()=>{
+    setIsSaved(!isSaved)
+  }
   const handlePostLike = () => {
     setIsPostLiked(!isPostLiked);
   }
@@ -38,13 +44,29 @@ const PostCard = () => {
           <img className="w-full" src="https://cdn.pixabay.com/photo/2017/12/11/15/34/lion-3012515_640.jpg" alt="" />
         </div>
 
-        <div>
-          <div>
-            {isPostLiked ? <AiFillAlert className='text-xl hover:opacity-50 cursor-pointer' onClick={handlePostLike} /> : <AiOutlineHeart className='text-xl hover:opacity-50 cursor-pointer' onClick={handlePostLike} />}
+        <div className='flex justify-between items-center w-full px-5 py-4'>
+          <div className='flex items-center space-x-2'>
+            {isPostLiked ? <AiFillHeart className='text-2xl hover:opacity-50 cursor-pointer text-red-600' onClick={handlePostLike} /> : <AiOutlineHeart className='text-2xl hover:opacity-50 cursor-pointer' onClick={handlePostLike} />}
 
-            <FaRegComment className='text-xl hover:opacity-50 cursor-pointer'/>
-            <RiSendPlane2Line className='text-xl hover:opacity-50 cursor-pointer'/>
+            <FaRegComment className='text-2xl hover:opacity-50 cursor-pointer'/>
+            <RiSendPlane2Line className='text-2xl hover:opacity-50 cursor-pointer'/>
 
+          </div>
+
+          <div className='cursor-pointer'>
+          {isSaved?<BsBookmarkFill onClick= {handleSavePost} className='text-2xl hover:opacity-50 cursor-pointer'/>: <BsBookmark onClick= {handleSavePost} className='text-2xl hover:opacity-50 cursor-pointer'/>}
+            
+           
+          </div>
+        </div>
+        <div className='w-full py-2 px-5'>
+          <p>10 Likes</p>
+          <p className='opacity-50 py-2 cursor-pointer'>view all 10 comments</p>
+        </div>
+        <div className='border border-t w-full'>
+          <div className='flex w-full items-center px-5'>
+          <BsEmojiSmile/>
+            <input className="commentInput" type="text" placeholder='Add a comment..'/>
           </div>
         </div>
       </div>
