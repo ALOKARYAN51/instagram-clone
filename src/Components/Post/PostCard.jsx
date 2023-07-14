@@ -4,21 +4,29 @@ import "./PostCard.css";
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import { FaRegComment } from 'react-icons/fa';
 import { RiSendPlane2Line } from 'react-icons/ri';
-import { BsBookmark, BsBookmarkFill} from "react-icons/bs";
+import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
+import CommentModel from '../Comment/CommentModel';
+import { useDisclosure } from '@chakra-ui/react';
+
+
 const PostCard = () => {
   const [showDropDown, setShowDropDown] = useState(false);
   const [isPostLiked, setIsPostLiked] = useState(false);
-  const[isSaved, setIsSaved]=useState(false);
+  const [isSaved, setIsSaved] = useState(false);
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
 
-  const handleSavePost=()=>{
+  const handleSavePost = () => {
     setIsSaved(!isSaved)
-  }
+  };
   const handlePostLike = () => {
     setIsPostLiked(!isPostLiked);
-  }
+  };
   const handleClick = () => {
     setShowDropDown(!showDropDown);
+  };
+  const handleOpenCommentModel = () => {
+    onOpen()
   }
   return (
     <div>
@@ -48,15 +56,15 @@ const PostCard = () => {
           <div className='flex items-center space-x-2'>
             {isPostLiked ? <AiFillHeart className='text-2xl hover:opacity-50 cursor-pointer text-red-600' onClick={handlePostLike} /> : <AiOutlineHeart className='text-2xl hover:opacity-50 cursor-pointer' onClick={handlePostLike} />}
 
-            <FaRegComment className='text-2xl hover:opacity-50 cursor-pointer'/>
-            <RiSendPlane2Line className='text-2xl hover:opacity-50 cursor-pointer'/>
+            <FaRegComment onClick={handleOpenCommentModel} className='text-2xl hover:opacity-50 cursor-pointer' />
+            <RiSendPlane2Line className='text-2xl hover:opacity-50 cursor-pointer' />
 
           </div>
 
           <div className='cursor-pointer'>
-          {isSaved?<BsBookmarkFill onClick= {handleSavePost} className='text-2xl hover:opacity-50 cursor-pointer'/>: <BsBookmark onClick= {handleSavePost} className='text-2xl hover:opacity-50 cursor-pointer'/>}
-            
-           
+            {isSaved ? <BsBookmarkFill onClick={handleSavePost} className='text-2xl hover:opacity-50 cursor-pointer' /> : <BsBookmark onClick={handleSavePost} className='text-2xl hover:opacity-50 cursor-pointer' />}
+
+
           </div>
         </div>
         <div className='w-full py-2 px-5'>
@@ -65,11 +73,21 @@ const PostCard = () => {
         </div>
         <div className='border border-t w-full'>
           <div className='flex w-full items-center px-5'>
-          <BsEmojiSmile/>
-            <input className="commentInput" type="text" placeholder='Add a comment..'/>
+            <BsEmojiSmile />
+            <input className="commentInput" type="text" placeholder='Add a comment..' />
           </div>
         </div>
       </div>
+
+      <CommentModel
+        handleLikePost={handlePostLike}
+        onClose={onClose}
+        isOpen={isOpen}
+        handleSavePost={handleSavePost}
+        isPostLiked={isPostLiked}
+        isSaved={isSaved}
+
+      />
     </div>
   )
 }
