@@ -2,10 +2,14 @@ import React, { useState } from "react";
 import { IoReorderThreeOutline } from "react-icons/io5"
 import { menu } from './SidebarConfig'
 import { useNavigate } from "react-router-dom";
+import CreatePostModel from "../Post/CreatePostModel";
+import { useDisclosure } from "@chakra-ui/react";
 
 const Sidebar = () => {
   const [activeTab, setActiveTab] = useState();
   const navigate = useNavigate();
+  const { isOpen, onClose, onOpen } = useDisclosure();
+
   const handleTabClick = (title) => {
     setActiveTab(title)
     if (title === "Profile") {
@@ -13,7 +17,9 @@ const Sidebar = () => {
     }
     else if (title === "Home") {
       navigate("/")
-    }
+    } 
+    else if(title==="Create")
+    onOpen()
   }
   return (
     <div className="sticky top-0 h-[100vh]">
@@ -38,6 +44,7 @@ const Sidebar = () => {
           <p className="ml-5">More</p>
         </div>
       </div>
+      <CreatePostModel onClose={onClose} isOpen={isOpen} />
     </div>
   )
 }

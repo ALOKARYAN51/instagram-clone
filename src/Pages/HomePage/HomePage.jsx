@@ -1,8 +1,10 @@
+
 import HomeRight from "../../Components/HomeRight/HomeRight"
 import PostCard from "../../Components/Post/PostCard"
 import StoryCircle from "../../Components/Story/StoryCircle"
 
 const HomePage = () => {
+  
   return (
     <div>
       <div className="mt-10 flex w-[100%] justify-center">
@@ -18,6 +20,7 @@ const HomePage = () => {
           <HomeRight/>
         </div>
       </div>
+     
     </div>
   )
 }
